@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/pure/0.6.0/pure-min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/railscasts.min.css">
+  <style>
+    dl, form, fieldset {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    .pure-g [class*="pure-u"] > pre,
+    .pure-g [class*="pure-u"] > h1,
+    .pure-g [class*="pure-u"] > h3,
+    .pure-g [class*="pure-u"] > div {
+      margin-right: 10px;
+      margin-left: 10px;
+    }
+    .map_canvas {
+      height: 320px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="pure-g">
+  <div class="pure-u-1-2">
+    <h1>地図表示テスト1</h1>
+
+    <h3>コード</h3>
+    <pre><code class="html">&lt;div class=&quot;map_canvas&quot; data-rejob-map&gt;
+  &lt;div data-lat=&quot;35.6911787227242&quot; data-lng=&quot;139.70417618751526&quot;&gt;
+    &lt;h2&gt;新宿三丁目駅&lt;/h2&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- TODO: ローカル以外ではキーの指定が必須！ --&gt;
+&lt;script src=&quot;https://maps.googleapis.com/maps/api/js?key=&amp;sensor=FALSE&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;jquery.rejobMaps.js&quot;&gt;&lt;/script&gt;</code></pre>
+
+    <h3>実行結果</h3>
+    <div class="map_canvas" data-rejob-map>
+      <div data-lat="35.6911787227242" data-lng="139.70417618751526">
+        <h2>新宿三丁目駅</h2>
+      </div>
+    </div>
+  </div>
+  <div class="pure-u-1-2">
+    <h1>地図表示テスト2</h1>
+
+    <h3>コード</h3>
+    <pre><code class="html">&lt;div class=&quot;map_canvas&quot; data-rejob-map&gt;
+  &lt;div data-lat=&quot;35.70209141821235&quot; data-lng=&quot;139.69561994075775&quot;&gt;
+    &lt;h2&gt;リジョブ&lt;/h2&gt;
+    &lt;p&gt;
+      東京都新宿区百人町2-27-7&lt;br&gt;
+      HUNDRED CIRCUS East Tower 2F
+    &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div data-lat=&quot;35.6967241306615&quot; data-lng=&quot;139.70829874277115&quot;&gt;
+    &lt;h2&gt;じげん&lt;/h2&gt;
+    &lt;p&gt;
+      東京都新宿区新宿6-27-30&lt;br&gt;
+      イーストサイドスクエア
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- TODO: ローカル以外ではキーの指定が必須！ --&gt;
+&lt;script src=&quot;https://maps.googleapis.com/maps/api/js?key=&amp;sensor=FALSE&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;jquery.rejobMaps.js&quot;&gt;&lt;/script&gt;</code></pre>
+
+    <h3>実行結果</h3>
+    <div class="map_canvas" data-rejob-map>
+      <div data-lat="35.70209141821235" data-lng="139.69561994075775">
+        <h2>リジョブ</h2>
+        <p>
+          東京都新宿区百人町2-27-7<br>
+          HUNDRED CIRCUS East Tower 2F
+        </p>
+      </div>
+      <div data-lat="35.6967241306615" data-lng="139.70829874277115">
+        <h2>じげん</h2>
+        <p>
+          東京都新宿区新宿6-27-30<br>
+          イーストサイドスクエア
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pure-g">
+  <div class="pure-u-1">
+    <h1>地図位置取得テスト</h1>
+
+    <h3>コード</h3>
+    <pre><code class="html">&lt;form id=&quot;search-form&quot;&gt;
+  &lt;fieldset&gt;
+    &lt;input id=&quot;address&quot; type=&quot;text&quot;&gt;
+    &lt;button type=&quot;submit&quot;&gt;検索&lt;/button&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;
+
+&lt;dl&gt;
+  &lt;dt&gt;緯度&lt;/dt&gt;
+  &lt;dt id=&quot;lat&quot;&gt;&lt;/dt&gt;
+
+  &lt;dt&gt;経度&lt;/dt&gt;
+  &lt;dt id=&quot;lng&quot;&gt;&lt;/dt&gt;
+&lt;/dl&gt;
+
+&lt;div&gt;&lt;small&gt;※地図をダブルクリックでマーカー設置、マーカーD&amp;Dでマーカー移動できます。&lt;/small&gt;&lt;/div&gt;
+&lt;div id=&quot;get-position-map&quot; class=&quot;map_canvas&quot; data-rejob-map data-rejob-map-auto-zoom-disable&gt;&lt;/div&gt;
+
+&lt;!-- TODO: ローカル以外ではキーの指定が必須！ --&gt;
+&lt;script src=&quot;https://maps.googleapis.com/maps/api/js?key=&amp;sensor=FALSE&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;jquery.rejobMaps.js&quot;&gt;&lt;/script&gt;</code></pre>
+
+    <pre><code class="js" id="script"></code></pre>
+
+    <h3>実行結果</h3>
+    <div class="pure-g">
+      <div class="pure-u-2-3">
+        <form id="search-form" class="pure-form">
+          <fieldset>
+            <input id="address" type="text" class="pure-input-rounded pure-input-2-3">
+            <button type="submit" class="pure-button pure-button-primary">検索</button>
+          </fieldset>
+        </form>
+      </div>
+      <div class="pure-u-1-3">
+        <dl>
+          <dt>緯度</dt>
+          <dt id="lat"></dt>
+          <dt>経度</dt>
+          <dt id="lng"></dt>
+        </dl>
+      </div>
+    </div>
+
+    <div><small>※地図をダブルクリックでマーカー設置、マーカーD&Dでマーカー移動できます。</small></div>
+    <div id="get-position-map" class="map_canvas" data-rejob-map data-rejob-map-auto-zoom-disable></div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=&sensor=FALSE"></script><!-- TODO: ローカル以外ではキーの指定が必須！ -->
+<script src="jquery.rejobMaps.js"></script>
+<script id="get-position-script">
+  $(function(){
+    var $map = $('#get-position-map'); // map を表示するブロック要素
+    var $address = $('#address'); // 検索入力エリア
+    var $form = $('#search-form'); // 検索フォームの form 要素
+
+    function positionChanged(lat, lng) {
+      // 緯度経度更新時の処理
+      $('#lat').text(lat);
+      $('#lng').text(lng);
+    }
+
+    /**
+     * ↓以下は基本的に変更不要
+     */
+    var setMarker = (function(onUpdate){
+      var marker;
+
+      function updatePosition(marker) {
+        onUpdate(marker.lat(), marker.lng());
+      }
+
+      return function(dom, position, autoZoom) {
+        if (marker) {
+          marker.setPosition(position);
+        } else {
+          marker = $(dom).rejobMap('addMarker', position, {draggable: true});
+          marker.on('dragend', function() {
+            updatePosition(marker);
+          });
+        }
+
+        if (autoZoom) {
+          $(dom).rejobMap('fitBounds');
+        }
+        updatePosition(marker);
+      };
+    })(positionChanged);
+
+    // マップのダブルクリック時にマーカーをセット
+    $map.rejobMap('getMap').on('dblclick', function(e){
+      setMarker(this, e.latLng);
+      return false;
+    });
+
+    // 検索ボックス
+    $form.on('submit', function(){
+      $.rejobMap('geocode', $address.val(), function(position) {
+        if (position !== false) {
+          setMarker($map, position, true);
+        } else {
+          alert('検索出来ませんでした');
+        }
+      });
+
+      return false;
+    });
+  });
+</script>
+
+<script>
+  $(function() {
+    // ソース表示用
+    $('#script').text($('#get-position-script').text());
+    hljs.initHighlightingOnLoad();
+  });
+</script>
+</body>
+</html>

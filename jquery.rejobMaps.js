@@ -3,9 +3,7 @@
  * https://github.com/rejob/jquery-rejob-maps
  * Koji Iwasaki, REJOB Co., Ltd.
  */
-(function($, win) {
-  var initialized = false;
-  var doc = win.document;
+(function($) {
   var MAP_DATA_KEY = 'rejob_madps_map';
 
   function Map(target, options_, mapOptions_) {
@@ -233,4 +231,4 @@
       });
     });
   });
-})(jQuery, this);
+})(jQuery);

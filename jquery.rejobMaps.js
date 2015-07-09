@@ -1,3 +1,8 @@
+/*!
+ * jquery.rejobMaps.js
+ * https://github.com/rejob/jquery-rejob-maps
+ * Koji Iwasaki, REJOB Co., Ltd.
+ */
 (function($, win) {
   var initialized = false;
   var doc = win.document;

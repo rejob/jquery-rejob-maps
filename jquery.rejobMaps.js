@@ -159,7 +159,17 @@
     });
   }
 
+  function checkMapsAPI() {
+    if (!(google && google.maps)) {
+      throw new Error('cannot get google.maps object');
+    }
+
+    return true;
+  }
+
   $.rejobMap = function(action, text, callback) {
+    checkMapsAPI();
+
     if (action == 'geocode') {
       geocode(text, callback);
     }
@@ -189,6 +199,8 @@
   };
 
   $.fn.rejobMap = function(action) {
+    checkMapsAPI();
+
     if (!action) {
       throw new Error('param action is required');
     }

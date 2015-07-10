@@ -241,9 +241,13 @@
       });
 
       $points.each(function eachPoint() {
-        var $item = $(this);
-        var marker = $map.rejobMap('addMarker', $item.data('lat'), $item.data('lng'));
-        $map.rejobMap('addInfoWindow', $item.html(), marker);
+        var $point = $(this);
+        var isDraggable = $point.is('[data-rejob-map-marker-draggable]');
+        var html = $point.html();
+        var marker = $map.rejobMap('addMarker', $point.data('lat'), $point.data('lng'), {draggable: isDraggable});
+        if (html) {
+          $map.rejobMap('addInfoWindow', html, marker);
+        }
       });
     });
   });

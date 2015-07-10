@@ -106,8 +106,8 @@
 </div>
 
 <div class="pure-g">
-  <div class="pure-u-1">
-    <h1>地図位置取得テスト</h1>
+  <div class="pure-u-1-2">
+    <h1>地図位置取得テスト１</h1>
 
     <h3>コード</h3>
     <pre><code class="html">&lt;form id=&quot;search-form&quot;&gt;
@@ -126,13 +126,13 @@
 &lt;/dl&gt;
 
 &lt;div&gt;&lt;small&gt;※地図をダブルクリックでマーカー設置、マーカーD&amp;Dでマーカー移動できます。&lt;/small&gt;&lt;/div&gt;
-&lt;div id=&quot;get-position-map&quot; class=&quot;map_canvas&quot; data-rejob-map data-rejob-map-auto-zoom-disable&gt;&lt;/div&gt;
+&lt;div id=&quot;get-position-map&quot; class=&quot;map_canvas&quot; data-rejob-map&gt;&lt;/div&gt;
 
 &lt;!-- TODO: ローカル以外ではキーの指定が必須！ --&gt;
 &lt;script src=&quot;https://maps.googleapis.com/maps/api/js?key=&amp;sensor=FALSE&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;jquery.rejobMaps.js&quot;&gt;&lt;/script&gt;</code></pre>
 
-    <pre><code class="js" id="script"></code></pre>
+    <pre><code class="js" id="script1"></code></pre>
 
     <h3>実行結果</h3>
     <div class="pure-g">
@@ -155,7 +155,63 @@
     </div>
 
     <div><small>※地図をダブルクリックでマーカー設置、マーカーD&Dでマーカー移動できます。</small></div>
-    <div id="get-position-map" class="map_canvas" data-rejob-map data-rejob-map-auto-zoom-disable></div>
+    <div id="get-position-map" class="map_canvas" data-rejob-map></div>
+  </div>
+
+  <div class="pure-u-1-2">
+    <h1>地図位置取得テスト２</h1>
+
+    <h3>コード</h3>
+    <pre><code class="html">&lt;form id=&quot;search-form2&quot;&gt;
+  &lt;fieldset&gt;
+    &lt;input id=&quot;address2&quot; type=&quot;text&quot;&gt;
+    &lt;button type=&quot;submit&quot;&gt;検索&lt;/button&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;
+
+&lt;dl&gt;
+  &lt;dt&gt;緯度&lt;/dt&gt;
+  &lt;dt id=&quot;lat2&quot;&gt;&lt;/dt&gt;
+
+  &lt;dt&gt;経度&lt;/dt&gt;
+  &lt;dt id=&quot;lng2&quot;&gt;&lt;/dt&gt;
+&lt;/dl&gt;
+
+&lt;div&gt;&lt;small&gt;※地図をダブルクリックでマーカー設置、マーカーD&amp;Dでマーカー移動できます。&lt;/small&gt;&lt;/div&gt;
+&lt;div id=&quot;get-position-map2&quot; class=&quot;map_canvas&quot; data-rejob-map&gt;
+  &lt;div data-lat=&quot;35.6911787227242&quot; data-lng=&quot;139.70417618751526&quot; data-rejob-map-marker-draggable&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- TODO: ローカル以外ではキーの指定が必須！ --&gt;
+&lt;script src=&quot;https://maps.googleapis.com/maps/api/js?key=&amp;sensor=FALSE&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;jquery.rejobMaps.js&quot;&gt;&lt;/script&gt;</code></pre>
+
+    <pre><code class="js" id="script2"></code></pre>
+
+    <h3>実行結果</h3>
+    <div class="pure-g">
+      <div class="pure-u-2-3">
+        <form id="search-form2" class="pure-form">
+          <fieldset>
+            <input id="address2" type="text" class="pure-input-rounded pure-input-2-3">
+            <button type="submit" class="pure-button pure-button-primary">検索</button>
+          </fieldset>
+        </form>
+      </div>
+      <div class="pure-u-1-3">
+        <dl>
+          <dt>緯度</dt>
+          <dt id="lat2"></dt>
+          <dt>経度</dt>
+          <dt id="lng2"></dt>
+        </dl>
+      </div>
+    </div>
+
+    <div><small>※地図をダブルクリックでマーカー設置、マーカーD&Dでマーカー移動できます。</small></div>
+    <div id="get-position-map2" class="map_canvas" data-rejob-map>
+      <div data-lat="35.6911787227242" data-lng="139.70417618751526" data-rejob-map-marker-draggable></div>
+    </div>
   </div>
 </div>
 
@@ -164,70 +220,170 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=&sensor=FALSE"></script><!-- TODO: ローカル以外ではキーの指定が必須！ -->
 <script src="jquery.rejobMaps.js"></script>
-<script id="get-position-script">
-  $(function(){
-    var $map = $('#get-position-map'); // map を表示するブロック要素
-    var $address = $('#address'); // 検索入力エリア
-    var $form = $('#search-form'); // 検索フォームの form 要素
+<script id="get-position-script1">
+$(function(){
+  var $map = $('#get-position-map'); // map を表示するブロック要素
+  var $address = $('#address'); // 検索入力エリア
+  var $form = $('#search-form'); // 検索フォームの form 要素
+  var map = $map.rejobMap('getMap');
 
-    function positionChanged(lat, lng) {
-      // 緯度経度更新時の処理
-      $('#lat').text(lat);
-      $('#lng').text(lng);
+  function positionChanged(lat, lng) {
+    // 緯度経度更新時の処理
+    $('#lat').text(lat);
+    $('#lng').text(lng);
+  }
+
+  /**
+   * ↓以下は基本的に変更不要
+   */
+  var setMarker = (function(onUpdate){
+    var marker;
+
+    function updatePosition(marker) {
+      onUpdate(marker.lat(), marker.lng());
     }
 
-    /**
-     * ↓以下は基本的に変更不要
-     */
-    var setMarker = (function(onUpdate){
-      var marker;
-
-      function updatePosition(marker) {
-        onUpdate(marker.lat(), marker.lng());
+    return function(dom, position, autoZoom) {
+      if (!marker && map.markers.length > 0) {
+        // すでにマーカーがあればそれを対象にする
+        marker = map.markers[0];
+        marker.on('position_changed', function() {
+          updatePosition(marker);
+        });
       }
 
-      return function(dom, position, autoZoom) {
+      if (position) {
         if (marker) {
+          // マーカー位置のセット
           marker.setPosition(position);
         } else {
-          marker = $(dom).rejobMap('addMarker', position, {draggable: true});
+          // 無ければ作る
+          marker = $(dom).rejobMap('addMarker', position, {draggable: true}, false);
           marker.on('position_changed', function() {
             updatePosition(marker);
           });
         }
 
         if (autoZoom) {
+          // ズームを調整する
           $(dom).rejobMap('fitBounds');
         }
+      }
+
+      if (marker) {
         updatePosition(marker);
-      };
-    })(positionChanged);
+      }
+    };
+  })(positionChanged);
 
-    // マップのダブルクリック時にマーカーをセット
-    $map.rejobMap('getMap').on('dblclick', function(e){
-      setMarker(this, e.latLng);
-      return false;
-    });
-
-    // 検索ボックス
-    $form.on('submit', function(){
-      $.rejobMap('geocode', $address.val(), function(position) {
-        if (position !== false) {
-          setMarker($map, position, true);
-        } else {
-          alert('検索出来ませんでした');
-        }
-      });
-
-      return false;
-    });
+  // マップのダブルクリック時にマーカーをセット
+  map.on('dblclick', function(e){
+    setMarker($map, e.latLng);
+    return false;
   });
+
+  // 検索ボックス
+  $form.on('submit', function(){
+    $.rejobMap('geocode', $address.val(), function(position) {
+      if (position !== false) {
+        setMarker($map, position, true);
+      } else {
+        alert('検索出来ませんでした');
+      }
+    });
+
+    return false;
+  });
+
+  // マーカーの初期化
+  setMarker($map);
+});
+</script>
+<script id="get-position-script2">
+$(function(){
+  var $map = $('#get-position-map2'); // map を表示するブロック要素
+  var $address = $('#address2'); // 検索入力エリア
+  var $form = $('#search-form2'); // 検索フォームの form 要素
+  var map = $map.rejobMap('getMap');
+
+  function positionChanged(lat, lng) {
+    // 緯度経度更新時の処理
+    $('#lat2').text(lat);
+    $('#lng2').text(lng);
+  }
+
+  /**
+   * ↓以下は基本的に変更不要
+   */
+  var setMarker = (function(onUpdate){
+    var marker;
+
+    function updatePosition(marker) {
+      onUpdate(marker.lat(), marker.lng());
+    }
+
+    return function(dom, position, autoZoom) {
+      if (!marker && map.markers.length > 0) {
+        // すでにマーカーがあればそれを対象にする
+        marker = map.markers[0];
+        marker.on('position_changed', function() {
+          updatePosition(marker);
+        });
+      }
+
+      if (position) {
+        if (marker) {
+          // マーカー位置のセット
+          marker.setPosition(position);
+        } else {
+          // 無ければ作る
+          marker = $(dom).rejobMap('addMarker', position, {draggable: true}, false);
+          marker.on('position_changed', function() {
+            updatePosition(marker);
+          });
+        }
+
+        if (autoZoom) {
+          // ズームを調整する
+          $(dom).rejobMap('fitBounds');
+        }
+      }
+
+      if (marker) {
+        updatePosition(marker);
+      }
+    };
+  })(positionChanged);
+
+  // マップのダブルクリック時にマーカーをセット
+  map.on('dblclick', function(e){
+    setMarker($map, e.latLng);
+    return false;
+  });
+
+  // 検索ボックス
+  $form.on('submit', function(){
+    $.rejobMap('geocode', $address.val(), function(position) {
+      if (position !== false) {
+        setMarker($map, position, true);
+      } else {
+        alert('検索出来ませんでした');
+      }
+    });
+
+    return false;
+  });
+
+  // マーカーの初期化
+  setMarker($map);
+});
 </script>
 
 <script>
   $(function() {
     // ソース表示用
-    $('#script').text($('#get-position-script').text());
+    $('#script1').text($('#get-position-script1').text());
+    $('#script2').text($('#get-position-script2').text());
     hljs.initHighlightingOnLoad();
   });
 </script>

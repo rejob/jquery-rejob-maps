@@ -191,7 +191,7 @@
           marker.setPosition(position);
         } else {
           marker = $(dom).rejobMap('addMarker', position, {draggable: true});
-          marker.on('dragend', function() {
+          marker.on('position_changed', function() {
             updatePosition(marker);
           });
         }
